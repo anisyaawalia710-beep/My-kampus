@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MY KAMPUS — Asisten Digital Mahasiswa</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pink: {
+              50:  '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+            },
+            dusty: {
+              100: '#f5e6ee',
+              200: '#e8c8da',
+              300: '#d4a0bc',
+              400: '#b8789e',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-pink-50 font-sans text-gray-700 min-h-screen">
+
+  <!-- ===== MOBILE OVERLAY ===== -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0">
+    <!-- Logo -->
+    <div class="px-6 py-5 border-b border-pink-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-300 to-dusty-300 flex items-center justify-center">
+          <span class="text-white font-bold text-sm">MK</span>
+        </div>
+        <div>
+          <h1 class="font-bold text-gray-800 text-base leading-tight">MY KAMPUS</h1>
+          <p class="text-xs text-gray-400">Asisten Digital</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+      <button class="nav-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="dashboard">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="jadwal">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Jadwal Kuliah
+      </button>
+      <button class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="tugas">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        Tugas
+      </button>
+      <button class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="kalender">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Kalender
+      </button>
+      <button class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="asisten">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        Asisten MK
+      </button>
+      <button class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" data-page="profil">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Profil
+      </button>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="px-4 py-4 border-t border-pink-100">
+      <div id="sidebarProfile" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-pink-200 flex items-center justify-center text-pink-600 font-bold text-xs" id="sidebarAvatar">M</div>
+        <div class="min-w-0">
+          <p class="text-sm font-medium text-gray-700 truncate" id="sidebarName">Mahasiswa</p>
+          <p class="text-xs text-gray-400 truncate" id="sidebarNim">NIM: -</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="lg:ml-64 min-h-screen flex flex-col">
+
+    <!-- Top Bar -->
+    <header class="bg-white border-b border-pink-100 px-4 lg:px-6 py-3 flex items-center justify-between sticky top-0 z-20">
+      <button id="menuToggle" class="lg:hidden p-2 rounded-lg hover:bg-pink-50 transition-colors" onclick="toggleSidebar()">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-500" id="headerDate"></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-pink-200 flex items-center justify-center text-pink-600 font-bold text-xs" id="headerAvatar">M</div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-6">
+
+      <!-- ==================== DASHBOARD ==================== -->
+      <section id="page-dashboard" class="page-section">
+        <!-- Welcome Banner -->
+        <div class="card mb-6 bg-gradient-to-r from-pink-200 via-pink-100 to-dusty-100 border-0">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-pink-500 font-medium mb-1">Selamat datang kembali 👋</p>
+              <h2 class="text-2xl font-bold text-gray-800" id="dashWelcomeName">Mahasiswa</h2>
+              <p class="text-sm text-gray-500 mt-1" id="dashDateFull"></p>
+            </div>
+            <div class="hidden sm:block text-6xl opacity-20">🎓</div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="card text-center">
+            <div class="text-3xl font-bold text-pink-400 mb-1" id="statMatkul">0</div>
+            <div class="text-xs text-gray-500">Mata Kuliah</div>
+          </div>
+          <div class="card text-center">
+            <div class="text-3xl font-bold text-pink-400 mb-1" id="statHariIni">0</div>
+            <div class="text-xs text-gray-500">Kelas Hari Ini</div>
+          </div>
+          <div class="card text-center">
+            <div class="text-3xl font-bold text-pink-400 mb-1" id="statTugas">0</div>
+            <div class="text-xs text-gray-500">Total Tugas</div>
+          </div>
+          <div class="card text-center">
+            <div class="text-3xl font-bold text-pink-400 mb-1" id="statDeadline">0</div>
+            <div class="text-xs text-gray-500">Deadline Dekat</div>
+          </div>
+        </div>
+
+        <!-- Today's Schedule + Upcoming Tasks -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Today's Schedule -->
+          <div class="card">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-gray-700 flex items-center gap-2">
+                <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Jadwal Hari Ini
+              </h3>
+              <span class="text-xs text-pink-400 bg-pink-50 px-2 py-1 rounded-full" id="dashTodayDay"></span>
+            </div>
+            <div id="dashTodaySchedule" class="space-y-3">
+              <p class="text-sm text-gray-400 text-center py-4">Tidak ada kelas hari ini</p>
+            </div>
+          </div>
+
+          <!-- Upcoming Deadlines -->
+          <div class="card">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-gray-700 flex items-center gap-2">
+                <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Deadline Mendekat
+              </h3>
+              <span class="text-xs text-gray-400">7 hari ke depan</span>
+            </div>
+            <div id="dashDeadlines" class="space-y-3">
+              <p class="text-sm text-gray-400 text-center py-4">Tidak ada deadline mendekat</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== JADWAL KULIAH ==================== -->
+      <section id="page-jadwal" class="page-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Jadwal Kuliah</h2>
+          <button onclick="openScheduleModal()" class="btn-primary flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Jadwal
+          </button>
+        </div>
+
+        <!-- Day Filter -->
+        <div class="card mb-6">
+          <div class="flex flex-wrap gap-2" id="dayFilterBtns">
+            <button class="day-filter-btn active" data-day="all">Semua</button>
+            <button class="day-filter-btn" data-day="Senin">Senin</button>
+            <button class="day-filter-btn" data-day="Selasa">Selasa</button>
+            <button class="day-filter-btn" data-day="Rabu">Rabu</button>
+            <button class="day-filter-btn" data-day="Kamis">Kamis</button>
+            <button class="day-filter-btn" data-day="Jumat">Jumat</button>
+            <button class="day-filter-btn" data-day="Sabtu">Sabtu</button>
+          </div>
+        </div>
+
+        <!-- Schedule Table/Cards -->
+        <div id="scheduleList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div class="col-span-full text-center py-12 text-gray-400">
+            <svg class="w-12 h-12 mx-auto mb-3 text-pink-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-sm">Belum ada jadwal. Tambahkan jadwal kuliah Anda!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TUGAS ==================== -->
+      <section id="page-tugas" class="page-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Manajemen Tugas</h2>
+          <button onclick="openTaskModal()" class="btn-primary flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Tugas
+          </button>
+        </div>
+
+        <!-- Task Filter -->
+        <div class="card mb-6">
+          <div class="flex flex-wrap gap-2">
+            <button class="day-filter-btn active" data-status="all" onclick="filterTasks(this)">Semua</button>
+            <button class="day-filter-btn" data-status="belum" onclick="filterTasks(this)">Belum Dikerjakan</button>
+            <button class="day-filter-btn" data-status="selesai" onclick="filterTasks(this)">Selesai</button>
+          </div>
+        </div>
+
+        <!-- Task List -->
+        <div id="taskList" class="space-y-4">
+          <div class="text-center py-12 text-gray-400">
+            <svg class="w-12 h-12 mx-auto mb-3 text-pink-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <p class="text-sm">Belum ada tugas. Tambahkan tugas Anda!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== KALENDER ==================== -->
+      <section id="page-kalender" class="page-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Kalender Akademik</h2>
+          <button onclick="openEventModal()" class="btn-primary flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Kegiatan
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <!-- Calendar Grid -->
+          <div class="xl:col-span-2 card">
+            <div class="flex items-center justify-between mb-4">
+              <button onclick="changeMonth(-1)" class="p-2 rounded-lg hover:bg-pink-50 transition-colors">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <h3 class="font-semibold text-gray-700" id="calMonthYear"></h3>
+              <button onclick="changeMonth(1)" class="p-2 rounded-lg hover:bg-pink-50 transition-colors">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            <!-- Day headers -->
+            <div class="grid grid-cols-7 mb-2">
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Min</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Sen</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Sel</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Rab</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Kam</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Jum</div>
+              <div class="text-center text-xs font-medium text-gray-400 py-1">Sab</div>
+            </div>
+            <div id="calendarGrid" class="grid grid-cols-7 gap-1"></div>
+          </div>
+
+          <!-- Events for Selected Day -->
+          <div class="card">
+            <h3 class="font-semibold text-gray-700 mb-4" id="eventDayTitle">Kegiatan</h3>
+            <div id="eventList" class="space-y-3">
+              <p class="text-sm text-gray-400 text-center py-4">Klik tanggal untuk melihat kegiatan</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== ASISTEN ==================== -->
+      <section id="page-asisten" class="page-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Asisten MY KAMPUS</h2>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="card flex flex-col" style="height: calc(100vh - 200px); min-height: 500px;">
+          <!-- Chat Header -->
+          <div class="flex items-center gap-3 pb-4 border-b border-pink-100 mb-4">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-300 to-dusty-300 flex items-center justify-center">
+              <span class="text-white font-bold text-sm">MK</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-700 text-sm">Asisten MY KAMPUS</p>
+              <p class="text-xs text-green-500 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span>Online</p>
+            </div>
+            <div class="ml-auto">
+              <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">Berbasis data lokal</span>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div id="chatMessages" class="flex-1 overflow-y-auto space-y-4 pr-1 chat-scroll">
+            <!-- Welcome message injected by JS -->
+          </div>
+
+          <!-- Quick Suggestions -->
+          <div class="py-3 border-t border-pink-50">
+            <div class="flex flex-wrap gap-2 mb-3" id="quickSuggestions">
+              <button class="suggestion-chip" onclick="sendSuggestion(this)">📅 Jadwal hari ini</button>
+              <button class="suggestion-chip" onclick="sendSuggestion(this)">⏰ Kelas berikutnya</button>
+              <button class="suggestion-chip" onclick="sendSuggestion(this)">📝 Daftar tugas</button>
+              <button class="suggestion-chip" onclick="sendSuggestion(this)">⚠️ Deadline dekat</button>
+              <button class="suggestion-chip" onclick="sendSuggestion(this)">📊 Ringkasan jadwal</button>
+            </div>
+            <!-- Input -->
+            <div class="flex gap-2">
+              <input type="text" id="chatInput" placeholder="Ketik pertanyaan Anda..." class="input-field flex-1 text-sm" onkeydown="if(event.key==='Enter') sendChat()" />
+              <button onclick="sendChat()" class="btn-primary px-4">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PROFIL ==================== -->
+      <section id="page-profil" class="page-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Profil Mahasiswa</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Profile Card -->
+          <div class="card text-center">
+            <div class="w-24 h-24 rounded-full bg-gradient-to-br from-pink-300 to-dusty-300 flex items-center justify-center mx-auto mb-4">
+              <span class="text-white font-bold text-3xl" id="profileAvatar">M</span>
+            </div>
+            <h3 class="font-bold text-gray-800 text-lg" id="profileNameDisplay">Mahasiswa</h3>
+            <p class="text-sm text-gray-500 mt-1" id="profileNimDisplay">NIM: -</p>
+            <p class="text-sm text-pink-400 mt-1" id="profileProdiDisplay">-</p>
+            <div class="mt-3 inline-block bg-pink-50 text-pink-500 text-xs px-3 py-1 rounded-full" id="profileSemDisplay">Semester -</div>
+          </div>
+
+          <!-- Edit Form -->
+          <div class="lg:col-span-2 card">
+            <h3 class="font-semibold text-gray-700 mb-5">Edit Informasi Profil</h3>
+            <form id="profileForm" onsubmit="saveProfile(event)" class="space-y-4">
+              <div>
+                <label class="label">Nama Lengkap</label>
+                <input type="text" id="profileName" class="input-field" placeholder="Masukkan nama lengkap" required />
+              </div>
+              <div>
+                <label class="label">NIM (Nomor Induk Mahasiswa)</label>
+                <input type="text" id="profileNim" class="input-field" placeholder="Masukkan NIM" required />
+              </div>
+              <div>
+                <label class="label">Program Studi</label>
+                <input type="text" id="profileProdi" class="input-field" placeholder="Contoh: Teknik Informatika" required />
+              </div>
+              <div>
+                <label class="label">Semester</label>
+                <select id="profileSem" class="input-field">
+                  <option value="1">Semester 1</option>
+                  <option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option>
+                  <option value="4">Semester 4</option>
+                  <option value="5">Semester 5</option>
+                  <option value="6">Semester 6</option>
+                  <option value="7">Semester 7</option>
+                  <option value="8">Semester 8</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary w-full">Simpan Profil</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: JADWAL ==================== -->
+  <div id="scheduleModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold text-gray-800" id="scheduleModalTitle">Tambah Jadwal</h3>
+        <button onclick="closeScheduleModal()" class="p-1 hover:bg-pink-50 rounded-lg">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="scheduleForm" onsubmit="saveSchedule(event)" class="space-y-4">
+        <input type="hidden" id="scheduleId" />
+        <div>
+          <label class="label">Nama Mata Kuliah</label>
+          <input type="text" id="schedMatkul" class="input-field" placeholder="Contoh: Algoritma dan Pemrograman" required />
+        </div>
+        <div>
+          <label class="label">Nama Dosen</label>
+          <input type="text" id="schedDosen" class="input-field" placeholder="Contoh: Dr. Budi Santoso" required />
+        </div>
+        <div>
+          <label class="label">Hari</label>
+          <select id="schedHari" class="input-field" required>
+            <option value="">-- Pilih Hari --</option>
+            <option>Senin</option><option>Selasa</option><option>Rabu</option>
+            <option>Kamis</option><option>Jumat</option><option>Sabtu</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="label">Jam Mulai</label>
+            <input type="time" id="schedMulai" class="input-field" required />
+          </div>
+          <div>
+            <label class="label">Jam Selesai</label>
+            <input type="time" id="schedSelesai" class="input-field" required />
+          </div>
+        </div>
+        <div>
+          <label class="label">Ruang Kelas</label>
+          <input type="text" id="schedRuang" class="input-field" placeholder="Contoh: Lab 301" required />
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeScheduleModal()" class="btn-secondary flex-1">Batal</button>
+          <button type="submit" class="btn-primary flex-1">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: TUGAS ==================== -->
+  <div id="taskModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold text-gray-800" id="taskModalTitle">Tambah Tugas</h3>
+        <button onclick="closeTaskModal()" class="p-1 hover:bg-pink-50 rounded-lg">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="taskForm" onsubmit="saveTask(event)" class="space-y-4">
+        <input type="hidden" id="taskId" />
+        <div>
+          <label class="label">Nama Tugas</label>
+          <input type="text" id="taskName" class="input-field" placeholder="Contoh: UTS Bab 3" required />
+        </div>
+        <div>
+          <label class="label">Mata Kuliah</label>
+          <input type="text" id="taskMatkul" class="input-field" placeholder="Nama mata kuliah" required />
+        </div>
+        <div>
+          <label class="label">Deskripsi</label>
+          <textarea id="taskDesc" class="input-field resize-none" rows="3" placeholder="Deskripsi tugas (opsional)"></textarea>
+        </div>
+        <div>
+          <label class="label">Tanggal Pengumpulan</label>
+          <input type="date" id="taskDeadline" class="input-field" required />
+        </div>
+        <div>
+          <label class="label">Status</label>
+          <select id="taskStatus" class="input-field">
+            <option value="belum">Belum Dikerjakan</option>
+            <option value="selesai">Selesai</option>
+          </select>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeTaskModal()" class="btn-secondary flex-1">Batal</button>
+          <button type="submit" class="btn-primary flex-1">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: EVENT KALENDER ==================== -->
+  <div id="eventModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-bold text-gray-800" id="eventModalTitle">Tambah Kegiatan</h3>
+        <button onclick="closeEventModal()" class="p-1 hover:bg-pink-50 rounded-lg">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="eventForm" onsubmit="saveEvent(event)" class="space-y-4">
+        <input type="hidden" id="eventId" />
+        <div>
+          <label class="label">Nama Kegiatan</label>
+          <input type="text" id="eventName" class="input-field" placeholder="Contoh: UTS Algoritma" required />
+        </div>
+        <div>
+          <label class="label">Tanggal</label>
+          <input type="date" id="eventDate" class="input-field" required />
+        </div>
+        <div>
+          <label class="label">Jenis Kegiatan</label>
+          <select id="eventType" class="input-field">
+            <option value="ujian">Ujian</option>
+            <option value="deadline">Deadline Tugas</option>
+            <option value="kegiatan">Kegiatan Akademik</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Keterangan</label>
+          <input type="text" id="eventNote" class="input-field" placeholder="Keterangan tambahan (opsional)" />
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeEventModal()" class="btn-secondary flex-1">Batal</button>
+          <button type="submit" class="btn-primary flex-1">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="toast hidden">
+    <span id="toastMsg"></span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+/* ==============================================
+   MY KAMPUS — Custom Styles
+   Tailwind CSS handles most styling.
+   This file covers: components, animations,
+   calendar, chat bubbles, scrollbar, utilities.
+   ============================================== */
+
+/* ----- Base & Typography ----- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----- Reusable Card ----- */
+.card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(236, 72, 153, 0.08), 0 4px 12px rgba(236, 72, 153, 0.06);
+  border: 1px solid #fce7f3;
+  transition: box-shadow 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.12), 0 8px 24px rgba(236, 72, 153, 0.08);
+}
+
+/* ----- Buttons ----- */
+.btn-primary {
+  background: linear-gradient(135deg, #f9a8d4 0%, #ec4899 100%);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.625rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: #f5e6ee;
+  color: #be185d;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.625rem;
+  border: 1px solid #fbcfe8;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-secondary:hover {
+  background: #fce7f3;
+}
+
+.btn-danger {
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #fecdd3;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn-danger:hover {
+  background: #ffe4e6;
+}
+
+/* ----- Form Elements ----- */
+.label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 0.375rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: #374151;
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  border-radius: 0.625rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-field:focus {
+  border-color: #f472b6;
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
+  background: #ffffff;
+}
+.input-field::placeholder {
+  color: #d1b5c4;
+}
+
+/* ----- Navigation Buttons ----- */
+.nav-btn {
+  color: #9ca3af;
+  text-align: left;
+}
+.nav-btn:hover {
+  background: #fdf2f8;
+  color: #be185d;
+}
+.nav-btn.active {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+  color: #be185d;
+  font-weight: 600;
+}
+
+/* ----- Day Filter Buttons ----- */
+.day-filter-btn {
+  padding: 0.375rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 2rem;
+  border: 1px solid #fbcfe8;
+  background: #ffffff;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.day-filter-btn:hover {
+  border-color: #f9a8d4;
+  color: #be185d;
+  background: #fdf2f8;
+}
+.day-filter-btn.active {
+  background: linear-gradient(135deg, #f9a8d4 0%, #ec4899 100%);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* ----- Schedule Cards ----- */
+.schedule-card {
+  background: #ffffff;
+  border-radius: 0.875rem;
+  padding: 1rem;
+  border: 1px solid #fce7f3;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.schedule-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #f9a8d4, #ec4899);
+  border-radius: 4px 0 0 4px;
+}
+.schedule-card:hover {
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ----- Task Cards ----- */
+.task-card {
+  background: #ffffff;
+  border-radius: 0.875rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #fce7f3;
+  transition: all 0.2s ease;
+}
+.task-card:hover {
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.1);
+}
+.task-card.done {
+  opacity: 0.65;
+  background: #fafafa;
+  border-color: #e5e7eb;
+}
+.task-card.deadline-warning {
+  border-color: #fca5a5;
+  background: #fff9f9;
+}
+.task-card.deadline-warning::before {
+  content: '⚠️ Deadline dalam 3 hari!';
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #e11d48;
+  margin-bottom: 0.5rem;
+}
+
+/* ----- Calendar ----- */
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  min-height: 2.5rem;
+}
+.cal-day:hover {
+  background: #fdf2f8;
+}
+.cal-day.today {
+  background: linear-gradient(135deg, #f9a8d4, #ec4899);
+  color: #ffffff;
+  font-weight: 700;
+}
+.cal-day.selected {
+  background: #fce7f3;
+  color: #be185d;
+  font-weight: 600;
+}
+.cal-day.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ec4899;
+}
+.cal-day.today.has-event::after {
+  background: #ffffff;
+}
+.cal-day.other-month {
+  color: #d1d5db;
+}
+
+/* ----- Event Type Badges ----- */
+.badge-ujian    { background: #fef3c7; color: #d97706; }
+.badge-deadline { background: #fee2e2; color: #dc2626; }
+.badge-kegiatan { background: #e0f2fe; color: #0284c7; }
+
+/* ----- Modal ----- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.hidden {
+  display: none;
+}
+.modal-box {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- Chat Bubbles ----- */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #fbcfe8 transparent;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: #fbcfe8;
+  border-radius: 4px;
+}
+
+.bubble-user {
+  display: flex;
+  justify-content: flex-end;
+}
+.bubble-user .bubble-inner {
+  background: linear-gradient(135deg, #f9a8d4, #ec4899);
+  color: #ffffff;
+  padding: 0.625rem 1rem;
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  max-width: 80%;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.bubble-bot {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.bubble-bot .bot-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f9a8d4, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+.bubble-bot .bubble-inner {
+  background: #fdf2f8;
+  color: #374151;
+  padding: 0.625rem 1rem;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  max-width: 80%;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border: 1px solid #fce7f3;
+}
+
+.suggestion-chip {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  color: #be185d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.suggestion-chip:hover {
+  background: #fce7f3;
+  border-color: #f9a8d4;
+}
+
+/* ----- Toast ----- */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #1f2937;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  z-index: 999;
+  animation: slideUp 0.25s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  max-width: 300px;
+}
+.toast.hidden {
+  display: none;
+}
+
+/* ----- Today's Schedule Item (Dashboard) ----- */
+.today-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  background: #fdf2f8;
+  border-radius: 0.75rem;
+  border: 1px solid #fce7f3;
+}
+.today-item .time-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #be185d;
+  background: #fce7f3;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  white-space: nowrap;
+}
+
+/* ----- Responsive Sidebar ----- */
+@media (max-width: 1023px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
